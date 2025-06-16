@@ -19,8 +19,7 @@ O roteiro de aula está disponível no AVA.
     ```
 2. Importe o projeto para seu Editor
 
-3. Configure o acesso ao banco de dados no aquivo `application.properties`. Utilize o modelo disponível neste link
-: [application.properties (modelo)](https://gist.github.com/jeffersonchaves/8ee03b602d150013c76caffdfc1e244c)
+3. Configure o acesso ao banco de dados no aquivo `application.properties`. Utilize o modelo disponível em: [application.properties (modelo)](https://gist.github.com/jeffersonchaves/8ee03b602d150013c76caffdfc1e244c)
 
 
 
@@ -31,6 +30,8 @@ camada-persistencia-aula/
 ├── src/
 │   ├── main/
 │   │   ├── java/
+│   │   │   ├── entities/
+│   │   │   └── repositories/
 │   │   └── resources/
 ├── README.md
 └── ...
