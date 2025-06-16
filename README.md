@@ -13,7 +13,6 @@ O roteiro de aula está disponível no AVA.
 
 ## Como Executar
 
-
 1. Clone o repositório:
     ```bash
     git clone https://github.com/IFPR-WebIII/gerenciador_biblioteca.git
