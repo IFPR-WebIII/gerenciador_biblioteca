@@ -1,35 +1,28 @@
-# Camada de Persistência - Aula
+# Camada de Persistência
 
-Este projeto demonstra a implementação de uma camada de persistência em aplicações, abordando conceitos como repositórios, entidades e integração com bancos de dados.
+Este projeto demonstra a implementação de uma camada de persistência em aplicações, abordando os conceitos de Mapeamento Objeto Relacional (ORM).
 
 O roteiro de aula está disponível no AVA.
 
-## Funcionalidades
 
-- CRUD de entidades
-- Integração com banco de dados relacional
-- Separação de responsabilidades
 
 ## Tecnologias Utilizadas
 
-- [Java/Spring Boot]
 - [Banco de dados/MySQL]
+- [Java/Spring Boot/Spring Data JPA]
 
 ## Como Executar
-
-0. Configure sua base de dados MySql
-
-- Crie uma base de dados chamada `ifpr-store`
-- Execute o script disponível [neste link](https://gist.github.com/jeffersonchaves/2342cea9050e85a1197ed2ad1661c0c4#file-ifpr_store_sellers-sql) 
 
 
 1. Clone o repositório:
     ```bash
-    git clone https://github.com/seu-usuario/camada-persistencia-aula.git
+    git clone https://github.com/IFPR-WebIII/gerenciador_biblioteca.git
     ```
 2. Importe o projeto para seu Editor
 
-3. Configure o acesso ao banco de dados na classe `ConnectionFactory`
+3. Configure o acesso ao banco de dados no aquivo `application.properties`. Utilize o modelo disponível neste link
+: [application.properties (modelo)](https://gist.github.com/jeffersonchaves/8ee03b602d150013c76caffdfc1e244c)
+
 
 
 ## Estrutura do Projeto
