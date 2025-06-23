@@ -1,5 +1,7 @@
 package br.edu.ifpr.gerenciador_biblioteca;
 
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
@@ -7,8 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 
+import br.edu.ifpr.gerenciador_biblioteca.entities.Emprestimo;
 import br.edu.ifpr.gerenciador_biblioteca.entities.Livro;
+import br.edu.ifpr.gerenciador_biblioteca.entities.Usuario;
+import br.edu.ifpr.gerenciador_biblioteca.repositories.EmprestimoRepository;
 import br.edu.ifpr.gerenciador_biblioteca.repositories.LivroRepository;
+import br.edu.ifpr.gerenciador_biblioteca.repositories.UsuarioRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.TypedQuery;
@@ -25,6 +31,12 @@ class GerenciadorBibliotecaApplicationTests {
 	@Autowired
 	LivroRepository livroRepository;
 
+	@Autowired
+	UsuarioRepository usuarioRepository;
+
+	@Autowired
+	EmprestimoRepository emprestimoRepository;
+
 	@Test
 	void deveInserirUmLivro() {
 
@@ -38,13 +50,12 @@ class GerenciadorBibliotecaApplicationTests {
 		System.out.println("O id do livro inserido foi: " + l1.getId());
 
 		l1.setAutor("Machado de Assis");
-
 	}
 
 	@Test
 	void deveAtualizarUmLivro(){
 
-		Livro livro = entityManager.find(Livro.class, 6L);
+		Livro livro = entityManager.find(Livro.class, 1L);
 
 		livro.setTitulo("Dom Casmurro");
 
@@ -52,7 +63,6 @@ class GerenciadorBibliotecaApplicationTests {
 
 		System.out.println("O livro procurado foi:");
 		System.out.println(livro);
-
 	} 
 
 	@Test
@@ -113,5 +123,65 @@ class GerenciadorBibliotecaApplicationTests {
 	}
 
 
+	@Test
+	public void deveInserirUmUsuario(){
 
+		Usuario usu1 = new Usuario();
+
+		usu1.setNome("John Doe");
+		usu1.setEmail("john.doe@email.com");
+		
+		usu1.setEmprestimo(null);
+
+		usuarioRepository.save(usu1);
+	}
+
+	@Test
+	public void deveInserirUmEmprestimo(){
+
+		Usuario usuario = usuarioRepository.findById(1L).get();
+
+		Livro livro1 = livroRepository.findById(1L).get();
+		Livro livro2 = livroRepository.findById(2L).get();
+
+		Emprestimo emprestimo = new Emprestimo();
+
+		emprestimo.setDataEmprestimo(LocalDate.now());
+		emprestimo.setDataDevolucao(LocalDate.now().plusDays(3));
+
+		emprestimo.setUsuario(usuario);
+
+		emprestimo.getLivros().add(livro1);
+		emprestimo.getLivros().add(livro2);
+
+		emprestimoRepository.save(emprestimo);
+	}
+
+	@Test
+	public void devolverLivro(){
+
+		Livro l1 = livroRepository.findById(2L).get();
+
+		//Long idEmprestimo = l1.getEmprestimo().getId();
+
+		Emprestimo emprestimo = emprestimoRepository.findById(3L).get();
+
+		emprestimo.getLivros().remove(l1);
+
+		l1.setDisponivel(true);
+
+		emprestimoRepository.save(emprestimo);
+
+	}
+
+	@Test
+	public void deveExibirUmUsuario(){
+		Usuario usuario = usuarioRepository.findById(1L).get();
+		System.out.println(usuario);
+
+		System.out.println("EMPRÉSTIMOS DO USUÁRIO");
+		for(Emprestimo emprestimo: usuario.getEmprestimo()){
+			System.out.println(emprestimo.getId() + " - " + emprestimo.getDataEmprestimo());
+		}
+	}
 }
