@@ -8,25 +8,24 @@ import br.edu.ifpr.gerenciador_biblioteca.entities.Usuario;
 import br.edu.ifpr.gerenciador_biblioteca.repositories.UsuarioRepository;
 
 @Service
-public class UsuarioService {
-
+public class AutenticacaoService {
+    
     @Autowired
     UsuarioRepository usuarioRepository;
 
     BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
-    public void save(Usuario usuario) throws IllegalArgumentException {
+    public Usuario login(String email, String senha ){
 
-        if (usuarioRepository.findByEmail(usuario.getEmail()).isPresent()) {
-            throw new IllegalArgumentException("E-mail já cadastrado");
+        Usuario usuario = usuarioRepository.findByEmail(email).get();
+
+        if (usuario == null || !encoder.matches(senha, usuario.getSenha())) {
+            throw new IllegalArgumentException("Usuário ou senha incorretos");
         }
 
-        String senhaCriptografada = encoder.encode(usuario.getSenha());
+        //criar condições de validações
 
-        usuario.setSenha(senhaCriptografada);
-
-        usuarioRepository.save(usuario);
+        return usuario; 
 
     }
-    
 }
